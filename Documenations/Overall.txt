@@ -1,0 +1,32 @@
+entities:
+- user (key: user id) fields:(user type, person id, account id)
+- auth (key: composite(user id, auth group id)
+- auth group (key: auth group id, auth group name)
+- person (key: person id) fields:(CPR, first name, last name, age, email)
+- account (key: account id) fields:(balance, card type id)
+- transaction (key: transaction id) fields:(debited account, credited account, amount, status, timestamp)
+- card types (key: card type id) fields:(withdrawLPD_Limit, transferLPD_Limit, transferLPDOwn_Limit, depositLPD_Limit, depositLPDOwn_Limit)
+- status (status id) fields: (status id, status class, status name, status description).
+
+classes:
+Authenticator
+Authorization
+User
+UserManager
+Account
+AccountManager
+TransactionManager
+Statement
+StatementManager
+InputParser
+ActionHandler
+Actions
+
+session data:
+logged_user_id
+ActionHistory
+lock (isLocked, LockedTill<timestamp>) *for login locking after multiple attempts
+
+global file data:
+
+
