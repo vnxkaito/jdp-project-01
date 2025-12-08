@@ -1,7 +1,8 @@
 entities:
 - user (key: user id) fields:(user type, person id, account id)
-- auth (key: composite(user id, auth group id)
+- auth *relationship* (key: composite(user id, auth group id)
 - auth group (key: auth group id, auth group name)
+- auth link (key: composite(auth group id, command)
 - person (key: person id) fields:(CPR, first name, last name, age, email)
 - account (key: account id) fields:(balance, card type id)
 - transaction (key: transaction id) fields:(debited account, credited account, amount, status, timestamp)
@@ -16,11 +17,15 @@ UserManager
 Account
 AccountManager
 TransactionManager
+Transaction
 Statement
 StatementManager
 InputParser
 ActionHandler
-Actions
+Action
+
+DataManager
+FileHandler
 
 session data:
 logged_user_id
@@ -28,5 +33,96 @@ ActionHistory
 lock (isLocked, LockedTill<timestamp>) *for login locking after multiple attempts
 
 global file data:
+
+general flow:
+
+
+
+::--------------::
+:: session data ::
+::--------------::
+
+logged-user
+logged-since
+session-id
+
+
+::--------------::
+::   commands   ::
+::--------------::
+-- Authentication and Authorization will be done using session data before executing any command.
+-- Session data should never be directly modifiable.
+
+
+login
+set-password
+withdraw -amount
+deposit -amount
+transfer -amount -recv-account
+display-history -account -start-date -end-date
+display-history-past-n -years -months -days -hours
+
+___
+
+Data shall be stored in csv and be retrieved by class through a unified interface
+The input should be:
+entity name
+operation type (create | modify | delete | display | display all)
+entity-key (required if modify, delete, or display)
+____
+
+CRUD related commands:
+
+create-user (*)
+modify-user (*)
+delete-user (*)
+display-user (*)
+display-all-users (*)
+
+assign-auth -user -auth
+auth-link -auth -command
+
+create-auth-group (*)
+modify-auth-group (*)
+delete-auth-group (*)
+display-auth-group (*)
+display-all-auth-groups (*)
+
+create-person (*)
+modify-person (*)
+delete-person (*)
+display-person (*)
+display-all-persons (*)
+
+create-account (args to be added)
+modify-account (*)
+delete-account (*)
+display-account (*)
+display-all-accounts(*)
+
+create-card-type (*)
+modify-card-type (*)
+delete-card-type (*)
+display-card-type (*)
+display-all-card-types (*)
+
+create-transaction (*)
+modify-transaction (*)
+delete-transaction (*)
+display-transaction (*)
+display-all-transaction (*)
+
+create-status (*)
+modify-status (*)
+delete-status (*)
+display-status (*)
+display-all-statuses (*)
+
+
+
+
+
+
+
 
 
