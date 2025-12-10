@@ -1,11 +1,12 @@
 package com.ga.java.cli;
 
 public class Input {
-    Argument[] arguments;
-    Command command;
+//    Argument[] arguments;
+    String command;
+    String[] args; // only the values
 
-    public Input(Command command, Argument[] arguments){
-        this.arguments = arguments;
+    public Input(String command, String[] arguments){
+        this.args = arguments;
         this.command = command;
     }
 }

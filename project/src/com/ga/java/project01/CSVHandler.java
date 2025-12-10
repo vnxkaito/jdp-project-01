@@ -9,10 +9,12 @@ import java.util.stream.Stream;
 
 public class CSVHandler {
     public static void main(String[] args) {
-        List<String> csvLine = null;
-        List<List<String>> csvData = null;
+        List<String> csvLine = new ArrayList<>();
+        List<List<String>> csvData = new ArrayList<>();
         csvLine.add("Test Line, test");
         csvData.add(csvLine);
+        CSVHandler testHandler = new CSVHandler();
+        boolean ret = testHandler.writeToCSVFile("test.csv", csvData);
     }
 
     String separator = ",";
@@ -30,15 +32,14 @@ public class CSVHandler {
             return false;
         }
     }
-    public List<List<String>> readCSV(String fileName, boolean hasHeader){
+    public static List<List<String>> readCSV(String fileName){
+        CSVHandler csvHandler = new CSVHandler();
+        List<List<String>> csvData = new ArrayList<>();
 
-        List<List<String>> csvData = null;
-        String line;
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
-            while ( br.readLine() != null ){
-                line  = br.readLine();
-                String[] data = line.split(separator);
-
+            String line;
+            while ( (line  = br.readLine()) != null ){
+                String[] data = line.split(csvHandler.separator);
                 csvData.add(Arrays.asList(data));
             }
         } catch (IOException e){
@@ -62,10 +63,11 @@ public class CSVHandler {
         }
     }
 
-    public void appendToCSVFile(String fileName, List<List<String>> csvData){
+    public static void appendToCSVFile(String fileName, List<List<String>> csvData){
+        CSVHandler csvHandler = new CSVHandler();
         csvData.forEach(row -> {
             try (PrintWriter writer = new PrintWriter(new FileWriter(fileName, true))) {
-                writer.println(String.join(separator, row));
+                writer.println(String.join(csvHandler.separator, row));
             } catch (IOException e){
                 System.out.println("Something went wrong while appending to CSV File");
             }

@@ -1,0 +1,6 @@
+customer,deposit
+customer,withdraw
+customer,transfer
+customer,set-password
+banker,display-history
+banker,display-history-past-n

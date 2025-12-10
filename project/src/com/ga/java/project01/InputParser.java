@@ -2,7 +2,14 @@ package com.ga.java.project01;
 
 import com.ga.java.cli.Input;
 
+import java.util.ArrayList;
+
+
 public class InputParser {
+    public static void main(String[] args) {
+        Input input = parse("testcommand -arg1 arg1Value");
+        System.out.println();
+    }
     private boolean checkCommandExists(
     ){
         // to be implemented
@@ -26,6 +33,17 @@ public class InputParser {
     public static Input parse(String inputString){
         String[] words;
         words = inputString.split(" ");
-        return null;
+        String command = "";
+        ArrayList<String> args = new ArrayList<>();
+        boolean firstWord = true;
+        for(int i = 0; i<words.length; i++){
+            if(firstWord){
+                command = words[i];
+                firstWord = false;
+            }else {
+                args.add(words[i]);
+            }
+        }
+        return new Input(command, args.toArray(new String[]{}));
     }
 }
