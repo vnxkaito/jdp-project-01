@@ -27,7 +27,7 @@ public class Transaction {
     public static void create(String debited, String credited, double amount, String status){
         String id = "TX" + System.currentTimeMillis(); // simple unique id
         Transaction tx = new Transaction(id, debited, credited, amount, status, LocalDateTime.now());
-        List<Transaction> transactions = getAllTransactions();
+        List<Transaction> transactions = new ArrayList<>();
         transactions.add(tx);
         CSVHandler.appendToCSVFile(fileName, toCSVData(transactions));
     }

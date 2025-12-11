@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 public class Account {
     static String fileName = "accounts.csv";
-    int overdraftCount;
     double overdraftFees;
     String accountId;
     double balance;
@@ -277,9 +276,9 @@ public class Account {
             return false;
         }
 
-        if (this.overdraftCount >= 2 && this.overdraftFees > 0){
+        if (getOverdraftCount() >= 2 && OverdraftRecord.getTotalFees(accountId) > 0){
             System.out.println("Account is locked, please pay overdraft fees");
-            System.out.println("Overdraft fees: " + this.overdraftFees);
+            System.out.println("Overdraft fees: " + OverdraftRecord.getTotalFees(accountId));
             return false;
         }
 
@@ -291,7 +290,7 @@ public class Account {
             this.chargeOverdraft();
             System.out.println("Balance is negative; Overdraft is charged");
             System.out.println("Balance: " + this.balance);
-            System.out.println("Overdraft fees: " + this.overdraftFees);
+            System.out.println("Overdraft fees: " + OverdraftRecord.getTotalFees(accountId));
         }
         this.balance -= amount;
 
@@ -325,9 +324,12 @@ public class Account {
     }
 
     private void chargeOverdraft(){
-        double overdraft = 35;
-        this.overdraftCount++;
-        this.overdraftFees += 35;
+        OverdraftRecord.getTotalFees(accountId);
+    }
+    public int getOverdraftCount(){
+        return (int)OverdraftRecord.getAllOverdrafts().stream()
+                .filter(d->d.accountId.equalsIgnoreCase(this.accountId))
+                .count();
     }
 
 
