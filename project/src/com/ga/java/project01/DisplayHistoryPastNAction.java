@@ -12,11 +12,14 @@ public class DisplayHistoryPastNAction implements Action {
             System.out.println("Please login first!");
             return false;
         }
-
+        if(!args[0].equalsIgnoreCase(session.getUserId())){
+            System.out.println("You can only do this command on your own accounts");
+        }
         if(args.length < 5){
             System.out.println("Usage: display-history-past-n <account> <years> <months> <days> <hours>");
             return false;
         }
+
 
         String accountId = args[0];
         int years = Integer.parseInt(args[1]);

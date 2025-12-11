@@ -2,5 +2,7 @@ customer,deposit
 customer,withdraw
 customer,transfer
 customer,set-password
+customer,display-history
+customer,display-history-past-n
 banker,display-history
 banker,display-history-past-n

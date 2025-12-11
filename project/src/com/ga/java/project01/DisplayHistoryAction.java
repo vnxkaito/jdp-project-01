@@ -14,6 +14,10 @@ public class DisplayHistoryAction implements Action {
             return false;
         }
 
+        if(!args[0].equalsIgnoreCase(session.getUserId())){
+            System.out.println("You can only do this command on your own accounts");
+        }
+
         if(args.length < 3){
             System.out.println("Usage: display-history <account> <start-date> <end-date>");
             return false;
