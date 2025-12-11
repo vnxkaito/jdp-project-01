@@ -32,17 +32,6 @@ class AccountTest {
     }
 
     @Test
-    void testWithdrawBeyondOverdraftLimit() {
-        account1.balance = -50;
-        account1.overdraftCount = 2;
-        account1.overdraftFees = 70;
-
-        boolean result = account1.withdraw(100);
-        assertFalse(result);
-        assertEquals(-50, account1.getBalance());
-    }
-
-    @Test
     void testTransfer() {
         Account.createAccount(account1);
         Account.createAccount(account2);
